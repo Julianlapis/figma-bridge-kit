@@ -1,2 +1,8 @@
 .DS_Store
 *.zip
+
+# Environment variables (added by security hardening pass 2026-06-12)
+.env
+.env.*
+!.env.example
+!.env.*.example

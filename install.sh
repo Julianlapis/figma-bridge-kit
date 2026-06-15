@@ -111,7 +111,9 @@ echo ""
 echo "  3. Copy the token (starts with figd_)"
 echo ""
 
-read -rp "  Paste your Figma token here: " FIGMA_TOKEN
+# -s: don't echo the token to the terminal (avoids scrollback / screen-share / TTY-log capture)
+read -rsp "  Paste your Figma token here: " FIGMA_TOKEN
+echo
 
 if [[ ! "$FIGMA_TOKEN" =~ ^figd_ ]]; then
   warn "Token doesn't start with 'figd_' — are you sure it's correct?"
@@ -147,7 +149,7 @@ case "$CLIENT_CHOICE" in
       -s user \
       -e FIGMA_ACCESS_TOKEN="$FIGMA_TOKEN" \
       -e ENABLE_MCP_APPS=true \
-      -- npx -y figma-console-mcp@latest
+      -- npx -y figma-console-mcp@1.31.0
     ok "figma-console registered in Claude Code"
     ;;
   2)
@@ -173,7 +175,7 @@ case "$CLIENT_CHOICE" in
         config.mcpServers = config.mcpServers || {};
         config.mcpServers['figma-console'] = {
           command: 'npx',
-          args: ['-y', 'figma-console-mcp@latest'],
+          args: ['-y', 'figma-console-mcp@1.31.0'],
           env: {
             FIGMA_ACCESS_TOKEN: '$FIGMA_TOKEN',
             ENABLE_MCP_APPS: 'true'
@@ -187,7 +189,7 @@ case "$CLIENT_CHOICE" in
   "mcpServers": {
     "figma-console": {
       "command": "npx",
-      "args": ["-y", "figma-console-mcp@latest"],
+      "args": ["-y", "figma-console-mcp@1.31.0"],
       "env": {
         "FIGMA_ACCESS_TOKEN": "$FIGMA_TOKEN",
         "ENABLE_MCP_APPS": "true"
@@ -212,7 +214,7 @@ JSONEOF
         config.mcpServers = config.mcpServers || {};
         config.mcpServers['figma-console'] = {
           command: 'npx',
-          args: ['-y', 'figma-console-mcp@latest'],
+          args: ['-y', 'figma-console-mcp@1.31.0'],
           env: {
             FIGMA_ACCESS_TOKEN: '$FIGMA_TOKEN',
             ENABLE_MCP_APPS: 'true'
@@ -226,7 +228,7 @@ JSONEOF
   "mcpServers": {
     "figma-console": {
       "command": "npx",
-      "args": ["-y", "figma-console-mcp@latest"],
+      "args": ["-y", "figma-console-mcp@1.31.0"],
       "env": {
         "FIGMA_ACCESS_TOKEN": "$FIGMA_TOKEN",
         "ENABLE_MCP_APPS": "true"
@@ -252,7 +254,7 @@ JSONEOF
         config.mcpServers = config.mcpServers || {};
         config.mcpServers['figma-console'] = {
           command: 'npx',
-          args: ['-y', 'figma-console-mcp@latest'],
+          args: ['-y', 'figma-console-mcp@1.31.0'],
           env: {
             FIGMA_ACCESS_TOKEN: '$FIGMA_TOKEN',
             ENABLE_MCP_APPS: 'true'
@@ -266,7 +268,7 @@ JSONEOF
   "mcpServers": {
     "figma-console": {
       "command": "npx",
-      "args": ["-y", "figma-console-mcp@latest"],
+      "args": ["-y", "figma-console-mcp@1.31.0"],
       "env": {
         "FIGMA_ACCESS_TOKEN": "$FIGMA_TOKEN",
         "ENABLE_MCP_APPS": "true"
@@ -287,9 +289,9 @@ JSONEOF
     "mcpServers": {
       "figma-console": {
         "command": "npx",
-        "args": ["-y", "figma-console-mcp@latest"],
+        "args": ["-y", "figma-console-mcp@1.31.0"],
         "env": {
-          "FIGMA_ACCESS_TOKEN": "'"$FIGMA_TOKEN"'",
+          "FIGMA_ACCESS_TOKEN": "<paste-your-token-here>",
           "ENABLE_MCP_APPS": "true"
         }
       }
@@ -331,7 +333,7 @@ echo ""
 
 # Pre-warm the server to create the plugin directory
 info "Pre-warming the MCP server to create the plugin directory..."
-timeout 10 npx -y figma-console-mcp@latest --print-path 2>/dev/null || true
+timeout 10 npx -y figma-console-mcp@1.31.0 --print-path 2>/dev/null || true
 
 if [ -f "$HOME/.figma-console-mcp/plugin/manifest.json" ]; then
   ok "Plugin directory ready at ~/.figma-console-mcp/plugin/"
